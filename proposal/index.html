@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teachers' Day Website — Plan & Demo · Dipankar Saha Sir</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Caveat:wght@500;700&family=Noto+Sans+Bengali:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0a1128; --navy2:#111a3d; --gold:#e8c26a; --gold2:#f7e3a8;
+  --ink:#e9edf7; --muted:#98a3c4; --line:rgba(232,194,106,.22);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--navy); color:var(--ink);
+  font-family:'Inter','Noto Sans Bengali',sans-serif; line-height:1.7;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(900px 500px at 15% -5%, rgba(232,194,106,.10), transparent 60%),
+    radial-gradient(700px 500px at 95% 15%, rgba(120,90,255,.10), transparent 60%),
+    radial-gradient(900px 600px at 50% 110%, rgba(232,194,106,.07), transparent 60%);
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
+
+/* ---------- progress ---------- */
+#prog{position:fixed;top:0;left:0;height:3px;width:0;z-index:99;
+  background:linear-gradient(90deg,var(--gold),#fff6d8);box-shadow:0 0 14px var(--gold)}
+
+/* ---------- hero ---------- */
+header{padding:90px 0 60px;text-align:center}
+.kicker{
+  display:inline-block;font-size:11px;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--line);border-radius:100px;padding:8px 20px;
+  margin-bottom:26px;background:rgba(232,194,106,.06)
+}
+h1{
+  font-family:'Cinzel',serif;font-weight:700;line-height:1.15;
+  font-size:clamp(30px,5.6vw,60px);
+  background:linear-gradient(120deg,#fff8e2,var(--gold) 45%,#b98f3e 75%,#fff8e2);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  background-size:220% auto;animation:shine 7s linear infinite
+}
+@keyframes shine{to{background-position:220% center}}
+.sub{font-family:'Caveat',cursive;font-size:clamp(22px,3.4vw,34px);color:var(--gold2);margin-top:6px}
+.lede{max-width:660px;margin:20px auto 0;color:var(--muted);font-size:15.5px}
+.meta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:26px}
+.chip{font-size:12.5px;color:var(--gold2);border:1px solid var(--line);
+  border-radius:100px;padding:7px 15px;background:rgba(255,255,255,.03)}
+
+/* ---------- sections ---------- */
+section{padding:56px 0;position:relative;z-index:2}
+.stitle{font-family:'Cinzel',serif;font-size:clamp(21px,3.1vw,30px);color:var(--gold);
+  display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.stitle::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.sdesc{color:var(--muted);margin-bottom:28px;font-size:15px;max-width:760px}
+
+/* ---------- concept cards ---------- */
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.09);border-radius:18px;overflow:hidden;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .45s,box-shadow .45s;
+  display:flex;flex-direction:column
+}
+.card:hover{transform:translateY(-9px);border-color:var(--line);
+  box-shadow:0 26px 60px rgba(0,0,0,.55),0 0 0 1px rgba(232,194,106,.18)}
+.card.best{border-color:rgba(232,194,106,.5);box-shadow:0 0 44px rgba(232,194,106,.14)}
+.shot{position:relative;aspect-ratio:16/9;background:#060a18;overflow:hidden;cursor:zoom-in}
+.shot img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.card:hover .shot img{transform:scale(1.07)}
+.badge{position:absolute;top:12px;left:12px;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;background:rgba(6,10,24,.82);border:1px solid var(--line);
+  color:var(--gold);padding:6px 12px;border-radius:100px;backdrop-filter:blur(8px)}
+.badge.win{background:linear-gradient(120deg,var(--gold),#b98f3e);color:#161006;border:0;font-weight:700}
+.cbody{padding:20px;flex:1;display:flex;flex-direction:column}
+.cbody h3{font-family:'Cinzel',serif;font-size:19px;color:var(--gold2);margin-bottom:8px}
+.cbody p{color:var(--muted);font-size:14px;flex:1}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.tag{font-size:11px;color:#cbd3ea;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.09);border-radius:6px;padding:4px 9px}
+.pick{margin-top:16px;text-align:center;font-size:12.5px;letter-spacing:.12em;
+  text-transform:uppercase;padding:11px;border-radius:10px;
+  border:1px solid var(--line);color:var(--gold);cursor:pointer;
+  background:rgba(232,194,106,.06);transition:.3s;font-weight:600}
+.pick:hover{background:var(--gold);color:#161006}
+
+/* ---------- live demo ---------- */
+.demoframe{
+  border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  box-shadow:0 34px 90px rgba(0,0,0,.65);background:#050813
+}
+.bar{display:flex;align-items:center;gap:8px;padding:11px 15px;
+  background:rgba(255,255,255,.045);border-bottom:1px solid rgba(255,255,255,.07)}
+.dot{width:11px;height:11px;border-radius:50%}
+.url{flex:1;text-align:center;font-size:12px;color:var(--muted);
+  background:rgba(0,0,0,.35);border-radius:7px;padding:5px 12px;max-width:420px;margin:0 auto}
+iframe{width:100%;height:660px;border:0;display:block;background:#050813}
+
+/* ---------- roadmap ---------- */
+.road{position:relative;padding-left:34px}
+.road::before{content:'';position:absolute;left:9px;top:6px;bottom:6px;width:2px;
+  background:linear-gradient(180deg,var(--gold),rgba(232,194,106,.12))}
+.step{position:relative;padding:0 0 24px 6px}
+.step::before{content:'';position:absolute;left:-30px;top:7px;width:12px;height:12px;
+  border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(232,194,106,.16)}
+.step b{color:var(--gold2);font-family:'Cinzel',serif;font-size:16px}
+.step p{color:var(--muted);font-size:14.5px}
+
+/* ---------- features ---------- */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px}
+.f{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;padding:17px;transition:.35s}
+.f:hover{background:rgba(232,194,106,.07);border-color:var(--line);transform:translateY(-4px)}
+.f .e{font-size:22px}
+.f b{display:block;color:var(--gold2);font-size:14.5px;margin:7px 0 4px}
+.f span{color:var(--muted);font-size:13px}
+
+/* ---------- table ---------- */
+.tbl{width:100%;border-collapse:collapse;font-size:14.2px;
+  border:1px solid rgba(255,255,255,.09);border-radius:14px;overflow:hidden}
+.tbl th{background:rgba(232,194,106,.1);color:var(--gold);text-align:left;
+  padding:12px 14px;font-family:'Cinzel',serif;font-weight:600;font-size:13.5px}
+.tbl td{padding:11px 14px;border-top:1px solid rgba(255,255,255,.06);color:#c9d2ea;vertical-align:top}
+.tbl tr:hover td{background:rgba(255,255,255,.03)}
+.tbl td:first-child{color:var(--gold2);font-weight:600;white-space:nowrap}
+
+/* ---------- questions ---------- */
+.q{background:linear-gradient(180deg,rgba(232,194,106,.09),rgba(232,194,106,.03));
+  border:1px solid var(--line);border-radius:18px;padding:26px}
+.q ol{margin-left:20px}
+.q li{margin-bottom:13px;color:#d6ddf2;font-size:15px}
+.q li b{color:var(--gold2)}
+.q .hint{color:var(--muted);font-size:13.5px;display:block;margin-top:3px}
+
+footer{padding:52px 0 70px;text-align:center;color:var(--muted);
+  border-top:1px solid rgba(255,255,255,.07);margin-top:36px;font-size:13.5px}
+
+/* ---------- lightbox ---------- */
+#lb{position:fixed;inset:0;background:rgba(3,6,16,.96);z-index:200;display:none;
+  align-items:center;justify-content:center;padding:24px;cursor:zoom-out;backdrop-filter:blur(6px)}
+#lb.on{display:flex;animation:fade .3s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+#lb img{max-width:100%;max-height:100%;border-radius:12px;
+  box-shadow:0 30px 90px rgba(0,0,0,.8);border:1px solid var(--line)}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s,transform .8s}
+.rv.in{opacity:1;transform:none}
+@media(max-width:640px){iframe{height:560px}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<div class="wrap">
+
+<header>
+  <div class="kicker">Proposal · Teachers' Day 2026</div>
+  <h1>শিক্ষক দিবসের ওয়েবসাইট</h1>
+  <div class="sub">for Dipankar Saha Sir</div>
+  <p class="lede">তিনটা ডিজাইন কনসেপ্ট, একটা চলন্ত লাইভ ডেমো, আর পুরো প্ল্যান — নিচে সব দেখে নাও।
+     পছন্দ কনফার্ম করলেই full website বানিয়ে GitHub Pages-এ ফ্রিতে লাইভ করে দেবো।</p>
+  <div class="meta">
+    <span class="chip">📍 Agarpara, North 24 Parganas</span>
+    <span class="chip">👥 ৯ জন ছাত্রছাত্রী</span>
+    <span class="chip">🖼️ ২৩টা ছবি</span>
+    <span class="chip">💸 ১০০% ফ্রি হোস্টিং</span>
+  </div>
+</header>
+
+<!-- ============ CONCEPTS ============ -->
+<section class="rv">
+  <div class="stitle">০১ · তিনটা ডিজাইন কনসেপ্ট</div>
+  <p class="sdesc">প্রত্যেকটার mockup নিচে। ছবিতে ক্লিক করলে বড় হয়ে যাবে। যেটা ভালো লাগে সেটার নাম আমাকে বলো।</p>
+  <div class="grid3">
+
+    <div class="card best">
+      <div class="shot" data-full="../demo/concept-A-golden-chalkboard.png">
+        <img src="../demo/concept-A-golden-chalkboard.png" alt="Concept A">
+        <span class="badge win">★ Recommended</span>
+      </div>
+      <div class="cbody">
+        <h3>A · Golden Chalkboard Cinema</h3>
+        <p>গাঢ় নেভি ব্ল্যাকবোর্ড টেক্সচার + সোনালি। Sir-এর ছবি একটা জ্বলজ্বলে গোল্ডেন রিং-এ,
+           চারপাশে চক দিয়ে আঁকা formula আস্তে আস্তে ফুটে ওঠে। নিচে ফিল্মস্ট্রিপ গ্যালারি।</p>
+        <div class="tags"><span class="tag">Premium</span><span class="tag">Cinematic</span>
+          <span class="tag">সম্মানজনক</span><span class="tag">Gold particles</span></div>
+        <div class="pick" data-c="A">এইটা চাই</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="shot" data-full="../demo/concept-B-aurora-glass.png">
+        <img src="../demo/concept-B-aurora-glass.png" alt="Concept B">
+        <span class="badge">Concept B</span>
+      </div>
+      <div class="cbody">
+        <h3>B · Aurora Glass 3D</h3>
+        <p>বেগুনি–টিল aurora গ্রেডিয়েন্ট, ফ্রস্টেড কাচের কার্ড, 3D coverflow ক্যারোসেল,
+           neon glow আর তারার particle। একদম মডার্ন অ্যাপের মতো ফিল।</p>
+        <div class="tags"><span class="tag">Modern</span><span class="tag">Techy</span>
+          <span class="tag">3D tilt</span><span class="tag">Glassmorphism</span></div>
+        <div class="pick" data-c="B">এইটা চাই</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="shot" data-full="../demo/concept-C-scrapbook-polaroid.png">
+        <img src="../demo/concept-C-scrapbook-polaroid.png" alt="Concept C">
+        <span class="badge">Concept C</span>
+      </div>
+      <div class="cbody">
+        <h3>C · Handmade Memory Scrapbook</h3>
+        <p>ক্রিম কাগজের টেক্সচার, polaroid ছবি washi-tape দিয়ে আটকানো, লাল সুতোয় জোড়া,
+           হাতে লেখা ফন্ট। সবচেয়ে বেশি আবেগ — চোখে জল আসার মতো।</p>
+        <div class="tags"><span class="tag">Emotional</span><span class="tag">Nostalgic</span>
+          <span class="tag">Polaroid</span><span class="tag">Handwritten</span></div>
+        <div class="pick" data-c="C">এইটা চাই</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ HYBRID ============ -->
+<section class="rv">
+  <div class="stitle">০২ · আমার সাজেশন — "The Golden Memory Book" (A + C)</div>
+  <p class="sdesc">
+    বাইরের খোলসটা <b style="color:var(--gold2)">A-এর premium gold-navy cinematic</b>, আর ভিতরের স্মৃতিগুলো
+    <b style="color:var(--gold2)">C-এর polaroid + হাতে লেখা emotional</b> স্টাইলে। দুটোর সেরা অংশ মিলিয়ে —
+    এরকম সাইট আর কারো থাকবে না। নিচের ছবিটা ভিতরের সেকশনগুলোর প্রিভিউ।
+  </p>
+  <div class="shot" data-full="../demo/inside-sections-preview.png"
+       style="border-radius:18px;border:1px solid var(--line);aspect-ratio:auto">
+    <img src="../demo/inside-sections-preview.png" alt="Inside sections" style="height:auto">
+  </div>
+</section>
+
+<!-- ============ LIVE DEMO ============ -->
+<section class="rv">
+  <div class="stitle">০৩ · চলন্ত লাইভ ডেমো <span style="font-size:12px;color:var(--muted);letter-spacing:.1em">(তোমার আসল ছবি দিয়ে)</span></div>
+  <p class="sdesc">এইটা ছবি নয় — সত্যিকারের চলন্ত ওয়েবসাইট। স্ক্রল করো, ছবিতে হোভার করো, স্লাইডার চলবে।
+     এটা শুধু একটা <b style="color:var(--gold2)">টিজার/স্যাম্পল</b> — full site-এ ১৩টা সেকশন থাকবে।</p>
+  <div class="demoframe">
+    <div class="bar">
+      <span class="dot" style="background:#ff5f57"></span>
+      <span class="dot" style="background:#febc2e"></span>
+      <span class="dot" style="background:#28c840"></span>
+      <span class="url">mentor-hub-pro.github.io/Teachers-day</span>
+    </div>
+    <iframe src="teaser.html" title="Live demo" loading="lazy"></iframe>
+  </div>
+</section>
+
+<!-- ============ STRUCTURE ============ -->
+<section class="rv">
+  <div class="stitle">০৪ · পুরো পেজে যা যা থাকবে (১৩টা সেকশন)</div>
+  <p class="sdesc">উপর থেকে নিচে স্ক্রল করলে যা যা আসবে —</p>
+  <table class="tbl">
+    <tr><th style="width:210px">Section</th><th>কী থাকবে</th><th style="width:230px">Effect</th></tr>
+    <tr><td>০০ · Cinematic Preloader</td><td>কালো পর্দায় চক দিয়ে লেখা ফুটে উঠবে "শিক্ষক দিবস ২০২৬", তারপর পর্দা দুদিকে সরে যাবে</td><td>Curtain reveal + chalk-write</td></tr>
+    <tr><td>০১ · Hero</td><td>Sir-এর profile pic গোল্ডেন রিং-এ, নাম, typewriter tagline</td><td>Gold particles, ring rotate, 3D tilt</td></tr>
+    <tr><td>০২ · Dedication</td><td>Sir-কে নিয়ে হৃদয় ছোঁয়া লেখা + ২-৩টা ছবি</td><td>Scroll reveal, parallax</td></tr>
+    <tr><td>০৩ · Counters</td><td>৯ জন ছাত্রছাত্রী · ১ জন গুরু · ∞ স্মৃতি</td><td>Count-up animation</td></tr>
+    <tr><td>০৪ · Our Journey</td><td>Agarpara-র পড়াশোনার journey, zig-zag গোল্ডেন timeline</td><td>স্ক্রল করলে লাইন আঁকা হয়</td></tr>
+    <tr><td>০৫ · The Students</td><td>৯ জনের circular profile card, নাম + quote</td><td>Hover flip → পিছনে message</td></tr>
+    <tr><td>০৬ · Memory Gallery</td><td>২৩টা ছবি masonry গ্রিডে</td><td>Hover zoom, lightbox, swipe</td></tr>
+    <tr><td>০৭ · Auto Slideshow</td><td>ফুল-উইড্‌থ স্লাইডার, ছবি নিজে বদলাবে</td><td>Ken Burns zoom, auto-play</td></tr>
+    <tr><td>০৮ · Letters to Sir</td><td>৯টা খাম — ক্লিক করলে খুলে চিঠি বেরোবে</td><td>3D envelope open</td></tr>
+    <tr><td>০৯ · Wish Wall</td><td>Sticky-note wish, visitor নিজেও লিখতে পারবে</td><td>localStorage save (server লাগবে না)</td></tr>
+    <tr><td>১০ · Guru Quote</td><td>Sir-এর শেখানো কথা / শ্লোক বড় করে</td><td>Text mask reveal</td></tr>
+    <tr><td>১১ · Thank You Finale</td><td>"ধন্যবাদ স্যার" + সবার সই</td><td>🎉 Confetti burst button</td></tr>
+    <tr><td>১২ · Footer</td><td>Agarpara, North 24 Parganas · Made with ❤️</td><td>Subtle glow</td></tr>
+  </table>
+</section>
+
+<!-- ============ UNIQUE ============ -->
+<section class="rv">
+  <div class="stitle">০৫ · যেগুলো এটাকে unique বানাবে</div>
+  <p class="sdesc">এই জিনিসগুলো সাধারণ টেমপ্লেট সাইটে পাবে না —</p>
+  <div class="fgrid">
+    <div class="f"><div class="e">🎬</div><b>Cinematic Intro</b><span>সাইট খুললেই সিনেমার পর্দার মতো reveal</span></div>
+    <div class="f"><div class="e">✍️</div><b>Chalk Handwriting</b><span>SVG দিয়ে সত্যি হাতে লেখার animation</span></div>
+    <div class="f"><div class="e">💌</div><b>Openable Letters</b><span>৯ জনের আলাদা চিঠি, ক্লিকে খোলে</span></div>
+    <div class="f"><div class="e">🎊</div><b>Confetti Thank You</b><span>বাটনে চাপলে সোনালি confetti ঝরবে</span></div>
+    <div class="f"><div class="e">🕯️</div><b>Light a Diya</b><span>গুরু-প্রণাম — ক্লিকে প্রদীপ জ্বলে</span></div>
+    <div class="f"><div class="e">📸</div><b>Swipe Lightbox</b><span>ফোনে সোয়াইপ করে ছবি দেখা</span></div>
+    <div class="f"><div class="e">🎵</div><b>Music Toggle</b><span>নরম background music (optional)</span></div>
+    <div class="f"><div class="e">🔗</div><b>WhatsApp Share</b><span>এক ক্লিকে সবাইকে পাঠানো</span></div>
+    <div class="f"><div class="e">📱</div><b>Mobile First</b><span>৯০% লোক ফোনে দেখবে — perfect হবে</span></div>
+    <div class="f"><div class="e">⚡</div><b>Super Fast</b><span>কোনো backend নেই, ২ সেকেন্ডে লোড</span></div>
+  </div>
+</section>
+
+<!-- ============ TECH ============ -->
+<section class="rv">
+  <div class="stitle">০৬ · টেক আর ফ্রি হোস্টিং</div>
+  <p class="sdesc">
+    <b style="color:var(--gold2)">Pure HTML + CSS + Vanilla JS</b> — কোনো build, কোনো npm, কোনো টাকা লাগবে না।
+    Repo-র root-এ <code style="color:var(--gold)">index.html</code> রাখলেই GitHub Pages সরাসরি চালাবে।
+  </p>
+  <div class="road">
+    <div class="step"><b>Step 1</b><p>তুমি কনসেপ্ট কনফার্ম করবে</p></div>
+    <div class="step"><b>Step 2</b><p>আমি পুরো সাইট বানিয়ে এই branch-এ commit করবো + লাইভ প্রিভিউ দেখাবো</p></div>
+    <div class="step"><b>Step 3</b><p>তুমি দেখে বদল বললে ঠিক করে দেবো</p></div>
+    <div class="step"><b>Step 4</b><p>PR merge → <code style="color:var(--gold)">main</code></p></div>
+    <div class="step"><b>Step 5</b><p>Settings → Pages → Source: <code style="color:var(--gold)">main / root</code> → Save</p></div>
+    <div class="step"><b>Step 6 · লাইভ 🎉</b><p><code style="color:var(--gold2)">https://mentor-hub-pro.github.io/Teachers-day/</code> — WhatsApp-এ Sir-কে পাঠিয়ে দাও</p></div>
+  </div>
+</section>
+
+<!-- ============ QUESTIONS ============ -->
+<section class="rv">
+  <div class="stitle">০৭ · আমার যা যা জানা দরকার</div>
+  <div class="q">
+    <ol>
+      <li><b>কোন কনসেপ্ট?</b> — A / B / C / <b style="color:var(--gold)">A+C Hybrid (আমার সাজেশন)</b></li>
+      <li><b>ভাষা কী হবে?</b><span class="hint">পুরো বাংলা / পুরো English / বাংলা+English মিক্স (recommended — headline English, আবেগের কথা বাংলায়)</span></li>
+      <li><b>ছবি কোথায় রাখবো?</b><span class="hint">ibb.co লিংক দিয়েই চলবে, কিন্তু repo-তে আপলোড করলে ibb ডাউন হলেও সাইট ঠিক থাকবে — আমার সাজেশন repo</span></li>
+      <li><b>কোন ছবিটা কার?</b><span class="hint">Sir-এর সবচেয়ে ভালো solo ছবিটা কোনটা, আর ৯ জনের profile pic কোনগুলো — বলে দিলে perfect বসবে। না বললে আমি নিজে দেখে best guess করে সাজাবো, পরে বদলানো ১ মিনিটের কাজ</span></li>
+      <li><b>চিঠির লেখা?</b><span class="hint">৯ জনের personal message তুমি লিখে দেবে, নাকি আমি সুন্দর করে লিখে দেবো (পরে এডিট করে নেবে)?</span></li>
+      <li><b>Background music চাই?</b><span class="hint">নরম instrumental, default OFF, কোণায় ছোট 🎵 বাটন</span></li>
+    </ol>
+    <p style="margin-top:18px;color:var(--gold2);font-size:15px">
+      ✅ শুধু <b>"A+C হাইব্রিড, বাংলা+English, বাকিটা তুমি ঠিক করো"</b> — এইটুকু বললেই আমি পুরোটা বানিয়ে ফেলবো।
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div style="font-family:'Caveat',cursive;font-size:23px;color:var(--gold2)">Made with ❤️ for Dipankar Saha Sir</div>
+  <div style="margin-top:7px">Agarpara · North 24 Parganas · Teachers' Day 2026</div>
+</footer>
+</div>
+
+<div id="lb"><img alt="preview"></div>
+
+<script>
+// progress bar
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  document.getElementById('prog').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+});
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.08});
+document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+// lightbox
+const lb=document.getElementById('lb'), lbi=lb.querySelector('img');
+document.querySelectorAll('.shot').forEach(s=>s.addEventListener('click',()=>{
+  lbi.src=s.dataset.full||s.querySelector('img').src; lb.classList.add('on');
+}));
+lb.addEventListener('click',()=>lb.classList.remove('on'));
+addEventListener('keydown',e=>e.key==='Escape'&&lb.classList.remove('on'));
+// pick
+document.querySelectorAll('.pick').forEach(p=>p.addEventListener('click',()=>{
+  const t=p.textContent; p.textContent='✓ '+p.dataset.c+' — এখন চ্যাটে আমাকে বলো';
+  p.style.background='var(--gold)'; p.style.color='#161006';
+  setTimeout(()=>{p.textContent=t;p.style.background='';p.style.color=''},2600);
+}));
+</script>
+</body>
+</html>
