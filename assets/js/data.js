@@ -40,7 +40,12 @@ window.TD_MAP = {
   teacher:   0,                             // Hero-তে স্যারের profile pic
   dedication:[12, 20, 21],                  // Dedication section-এর ছবি
   timeline:  [1, 3, 8, 14, 22],             // Timeline-এর ছবি
-  students:  [1, 2, 3, 4, 5, 6, 7, 9, 10],  // ৯ জনের profile pic (order অনুযায়ী)
+
+  // ৯ জনের profile pic। null = সোনালি মনোগ্রাম (নামের প্রথম অক্ষর) দেখাবে।
+  // সাইটে ✎ বোতাম টিপে মাউস দিয়ে ছবি বসিয়ে নাও — তারপর "Copy config"
+  // চেপে এই লাইনটা replace করে দিলেই পাকাপাকি হয়ে যাবে।
+  students:  [null, null, null, null, null, null, null, null, null],
+
   slideshow: [21, 14, 19, 17, 4, 9, 13, 22, 8, 2],
   polaroid:  [0, 6, 11, 16, 18]
 };

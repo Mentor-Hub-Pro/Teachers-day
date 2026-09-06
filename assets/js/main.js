@@ -23,30 +23,41 @@
   function preloader() {
     const pre = $('#preloader');
     if (!pre) return;
-    const path = $('#cw');
-    if (path && !reduced) {
-      const len = path.getTotalLength();
-      path.style.strokeDasharray = len;
-      path.style.strokeDashoffset = len;
-      path.style.transition = 'stroke-dashoffset 2s ease-in-out';
-      requestAnimationFrame(() => { path.style.strokeDashoffset = '0'; });
+    if (!reduced) {
+      [['#cw', 1.5, .5], ['#cw2', 1.1, 1.5]].forEach(([sel, dur, delay]) => {
+        const path = $(sel);
+        if (!path || !path.getTotalLength) return;
+        const len = path.getTotalLength();
+        path.style.strokeDasharray = len;
+        path.style.strokeDashoffset = len;
+        path.style.transition = `stroke-dashoffset ${dur}s ease-in-out ${delay}s`;
+        requestAnimationFrame(() => { path.style.strokeDashoffset = '0'; });
+      });
     }
+    let opened = false;
     const open = () => {
+      if (opened) return;
+      opened = true;
       pre.classList.add('open');
       document.body.classList.remove('locked');
       setTimeout(() => pre.classList.add('done'), 300);
     };
-    setTimeout(open, reduced ? 400 : 3200);
+    setTimeout(open, reduced ? 400 : 3300);
     pre.addEventListener('click', open);
   }
 
   /* ---------------- HERO ---------------- */
-  function hero() {
+  function heroPic() {
     const pic = $('#teacherPic');
-    if (pic) {
-      pic.src = photo(MAP.teacher || 0).url || '';
-      pic.alt = (T.name || 'Teacher') + ' — profile';
-    }
+    if (!pic) return;
+    const ov = savedFaces();
+    const idx = ov.teacher != null ? ov.teacher : (MAP.teacher || 0);
+    pic.src = photo(idx).url || '';
+    pic.alt = (T.name || 'Teacher') + ' — profile';
+  }
+
+  function hero() {
+    heroPic();
     if (T.name)   $('#sirName').textContent  = T.name;
     if (T.title)  $('#sirTitle').textContent = T.title;
 
@@ -135,15 +146,36 @@
   }
 
   /* ---------------- STUDENTS ---------------- */
+  const PKEY = 'td_faces_v1';
+  const savedFaces = () => {
+    try { return JSON.parse(localStorage.getItem(PKEY)) || {}; } catch (_) { return {}; }
+  };
+  // resolved photo index for student i, or null for monogram
+  function faceIndex(i) {
+    const ov = savedFaces();
+    if (ov[i] != null) return ov[i];
+    const ids = MAP.students || [];
+    return ids[i] != null ? ids[i] : null;
+  }
+
+  function avatarHTML(s, i) {
+    const idx = faceIndex(i);
+    if (idx == null) {
+      const initial = (s.name || '?').trim().charAt(0).toUpperCase();
+      return `<div class="mono">${esc(initial)}</div>`;
+    }
+    const p = photo(idx);
+    return `<img src="${esc(p.url)}" loading="lazy" alt="${esc(s.name)}">`;
+  }
+
   function students() {
     const box = $('#studentGrid');
     if (!box) return;
-    const ids = MAP.students || [];
-    box.innerHTML = S.map((s, i) => {
-      const p = photo(ids[i] != null ? ids[i] : i + 1);
-      return `<div class="flip" tabindex="0"><div class="flip-in">
+    box.innerHTML = S.map((s, i) => `
+      <div class="flip" tabindex="0" data-s="${i}"><div class="flip-in">
         <div class="face">
-          <div class="avatar"><img src="${esc(p.url)}" loading="lazy" alt="${esc(s.name)}"></div>
+          <button class="pickbtn" data-pick="${i}" title="এই জনের ছবি বাছুন">✎</button>
+          <div class="avatar">${avatarHTML(s, i)}</div>
           <b>${esc(s.name)}</b>
           <div class="bnname">${esc(s.bn || '')}</div>
           <div class="role">Student</div>
@@ -153,15 +185,101 @@
           <div class="q">${esc(s.quote || '')}</div>
           <small>— ${esc(s.name)}</small>
         </div>
-      </div></div>`;
-    }).join('');
+      </div></div>`).join('');
 
     $$('.flip', box).forEach(f => {
-      const toggle = () => f.classList.toggle('flipped');
+      const toggle = e => {
+        if (e && e.target && e.target.closest('.pickbtn')) return;
+        f.classList.toggle('flipped');
+      };
       f.addEventListener('click', toggle);
       f.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
       });
+    });
+  }
+
+  /* ---------------- PHOTO STUDIO ---------------- */
+  function studio() {
+    const modal = $('#studio');
+    if (!modal) return;
+    const grid = $('#studioGrid'), title = $('#studioTitle');
+    let who = 0; // number = student index, 'teacher' = hero portrait
+
+    const curIndex = () => {
+      if (who === 'teacher') {
+        const ov = savedFaces();
+        return ov.teacher != null ? ov.teacher : (MAP.teacher || 0);
+      }
+      return faceIndex(who);
+    };
+
+    const paintGrid = () => {
+      const cur = curIndex();
+      grid.innerHTML = P.map((p, i) =>
+        `<div class="sp${i === cur ? ' sel' : ''}" data-i="${i}">
+           <img src="${esc(p.url)}" loading="lazy" alt="">
+           <span class="n">${i + 1}</span>
+         </div>`).join('');
+    };
+    const open = i => {
+      who = i;
+      title.textContent = (i === 'teacher')
+        ? (T.name || 'Sir') + ' — স্যারের ছবি বাছুন'
+        : ((S[i] && S[i].name ? S[i].name : 'ছাত্র') + ' — ছবি বাছুন');
+      paintGrid();
+      modal.classList.add('on');
+      document.body.classList.add('locked', 'studio');
+    };
+    const close = () => {
+      modal.classList.remove('on');
+      document.body.classList.remove('locked', 'studio');
+    };
+    const save = (i, val) => {
+      const ov = savedFaces();
+      if (val == null) delete ov[i]; else ov[i] = val;
+      try { localStorage.setItem(PKEY, JSON.stringify(ov)); } catch (_) {}
+      if (i === 'teacher') heroPic(); else students();
+    };
+
+    document.addEventListener('click', e => {
+      const b = e.target.closest('.pickbtn');
+      if (b) {
+        e.stopPropagation();
+        open(b.dataset.pick === 'teacher' ? 'teacher' : +b.dataset.pick);
+      }
+    });
+    grid.addEventListener('click', e => {
+      const c = e.target.closest('.sp');
+      if (!c) return;
+      save(who, +c.dataset.i);
+      paintGrid();
+      setTimeout(close, 220);
+    });
+    $('#studioClose').addEventListener('click', close);
+    $('#studioClear').addEventListener('click', () => { save(who, null); paintGrid(); });
+    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+    addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+    $('#studioCopy').addEventListener('click', () => {
+      const ov = savedFaces();
+      const tIdx = ov.teacher != null ? ov.teacher : (MAP.teacher || 0);
+      const arr = S.map((_, i) => faceIndex(i));
+      const text =
+        '  teacher:   ' + tIdx + ',\n' +
+        '  students:  [' + arr.map(v => (v == null ? 'null' : v)).join(', ') + '],';
+      const btn = $('#studioCopy');
+      const done = ok => {
+        btn.textContent = ok ? '✓ কপি হয়েছে!' : '⚠ কপি হয়নি';
+        setTimeout(() => { btn.textContent = '📋 Copy config'; }, 2200);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => done(true)).catch(() => {
+          prompt('assets/js/data.js-এর TD_MAP-এ এই দুটো লাইন বসান —', text);
+        });
+      } else {
+        prompt('assets/js/data.js-এর TD_MAP-এ এই দুটো লাইন বসান —', text);
+      }
     });
   }
 
@@ -565,11 +683,28 @@
     });
   }
 
+  /* ---------------- FIRST-VISIT TIP ---------------- */
+  const TIPKEY = 'td_tip_seen_v1';
+  function tip() {
+    const el = $('#tip');
+    if (!el) return;
+    let seen = false;
+    try { seen = localStorage.getItem(TIPKEY) === '1'; } catch (_) {}
+    const anySet = Object.keys(savedFaces()).length > 0;
+    if (seen || anySet) { el.remove(); return; }
+    setTimeout(() => el.classList.add('on'), 5200);
+    $('#tipOk').addEventListener('click', () => {
+      el.classList.remove('on');
+      try { localStorage.setItem(TIPKEY, '1'); } catch (_) {}
+      setTimeout(() => el.remove(), 800);
+    });
+  }
+
   /* ---------------- INIT ---------------- */
   document.addEventListener('DOMContentLoaded', () => {
-    preloader(); hero(); dedication(); timeline(); students();
+    preloader(); hero(); dedication(); timeline(); students(); studio();
     gallery(); lightbox(); slideshow(); board(); letters();
     wishes(); quote(); finale(); particles(); chrome();
-    counters(); reveal(); music();
+    counters(); reveal(); music(); tip();
   });
 })();

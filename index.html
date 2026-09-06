@@ -26,16 +26,12 @@
   <div class="curtain l"></div>
   <div class="curtain r"></div>
   <div class="pre-inner">
-    <svg class="chalk-svg" viewBox="0 0 520 130" aria-label="শিক্ষক দিবস">
-      <path id="cw" d="M30 88 C 46 30, 66 30, 76 66 C 84 96, 104 96, 112 60
-                       M132 44 L132 92 M132 68 L166 42 M132 68 L168 92
-                       M196 44 L196 92 M196 44 L232 44 M196 66 L226 66 M196 92 L232 92
-                       M258 44 L258 92 M258 92 L292 92
-                       M318 44 L318 92 M318 44 C 356 44, 356 92, 318 92
-                       M382 50 C 356 42, 356 66, 382 68 C 408 70, 408 94, 380 88
-                       M432 44 L444 92 L456 44 L468 92 L480 44"/>
+    <div class="pre-title">শিক্ষক দিবস</div>
+    <svg class="chalk-svg" viewBox="0 0 400 46" aria-hidden="true">
+      <path id="cw"  d="M14 30 C 92 8, 168 8, 200 20 C 232 32, 308 32, 386 12"/>
+      <path id="cw2" d="M74 40 C 140 30, 260 30, 326 40"/>
     </svg>
-    <div class="pre-sub">শিক্ষক দিবস · ২০২৬</div>
+    <div class="pre-sub">২০২৬ · আগরপাড়া</div>
     <div class="pre-tap">Loading memories…</div>
   </div>
 </div>
@@ -70,7 +66,10 @@
   <div class="chalk-doodle" style="top:42%;left:3%;animation-delay:3.2s">√</div>
   <div class="chalk-doodle" style="top:38%;right:3%;animation-delay:2.1s">Σ</div>
 
-  <div class="portrait" id="portrait"><img id="teacherPic" alt="Dipankar Saha Sir"></div>
+  <div class="portrait" id="portrait">
+    <img id="teacherPic" alt="Dipankar Saha Sir">
+    <button class="pickbtn hero-pick" data-pick="teacher" title="স্যারের ছবি বাছুন">✎</button>
+  </div>
   <h1>HAPPY TEACHERS' DAY</h1>
   <div class="sirname" id="sirName">Dipankar Saha</div>
   <div class="sirtitle" id="sirTitle">Our Mentor, Our Guide</div>
@@ -281,6 +280,27 @@
     <h3 id="paperName"></h3>
     <p id="paperText"></p>
     <div class="from" id="paperFrom"></div>
+  </div>
+</div>
+
+<div id="tip">
+  <p>💡 ছবিগুলো এখনো কার-কোনটা ঠিক করা হয়নি। যে কোনো ছবির কোণে <b>✎</b> চেপে নিজের পছন্দমতো বসিয়ে নিন — সাথে সাথেই সেভ হবে।</p>
+  <button id="tipOk">বুঝেছি</button>
+</div>
+
+<div id="studio">
+  <div class="studio-box">
+    <div class="studio-hd" style="position:relative">
+      <button class="x" id="studioClose" aria-label="Close">×</button>
+      <h3 id="studioTitle">ছবি বাছুন</h3>
+      <p>যে ছবিটা এই জনের, সেটায় ক্লিক করুন। ব্রাউজারে সেভ থাকবে।</p>
+    </div>
+    <div class="studio-grid" id="studioGrid"></div>
+    <div class="studio-ft">
+      <span class="hint" id="studioHint">সব বসানো হলে "Copy config" চেপে data.js-এ বসিয়ে দিন।</span>
+      <button class="btn ghost sm" id="studioClear">এটা মুছুন</button>
+      <button class="btn sm" id="studioCopy">📋 Copy config</button>
+    </div>
   </div>
 </div>
 
